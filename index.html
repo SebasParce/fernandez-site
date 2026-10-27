@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fernandez Flooring</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Floors, roofs and bathrooms in metro Atlanta. Residential and commercial. Itemized written estimates. Se habla español.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: job-site signage. Slate hero band with a working photo, three trade panels, a "what we do / don't do" insurance sheet, a real 5-step job sequence, a project gallery, estimate form, sticky call bar on phones. EN/ES toggle in the header. */
+:root{
+  --paper:#F3F5F2; --card:#FFFFFF; --ink:#121A14; --muted:#56635A; --line:#D6DCD4;
+  --slate:#050805; --slate-ink:#EEF3EC; --slate-muted:#9DB09A;
+  --oak:#187A0E; --oak-strong:#12600A; --oak-soft:rgba(24,122,14,.10);
+  --neon:#3DE626; --neon-hover:#62F04D;
+  --shingle-a:#26302A; --shingle-b:#1C241F;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --wrap:1120px; --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0C110D; --card:#131A14; --ink:#E7EEE6; --muted:#98A898; --line:#243026;
+  --oak:#4BE832; --oak-strong:#6FF05A; --oak-soft:rgba(75,232,50,.12);
+  --shingle-a:#222C25; --shingle-b:#19211C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0C110D; --card:#131A14; --ink:#E7EEE6; --muted:#98A898; --line:#243026;
+  --oak:#4BE832; --oak-strong:#6FF05A; --oak-soft:rgba(75,232,50,.12);
+  --shingle-a:#222C25; --shingle-b:#19211C; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--slate)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:.98;letter-spacing:.005em;text-wrap:balance;margin:0;text-transform:uppercase}
+h2{font-size:clamp(36px,5vw,54px);font-weight:800}
+h3{font-size:30px;font-weight:800}
+p{margin:0}
+a{color:inherit}
+img{display:block;max-width:100%}
+.eyebrow{font:500 12px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--oak)}
+.lede{color:var(--muted);max-width:60ch}
+:focus-visible{outline:3px solid var(--oak);outline-offset:3px}
+.ph{background:var(--oak-soft);border-radius:3px;padding:0 4px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--slate);color:var(--slate-ink);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:12px}
+.brand{display:flex;align-items:center;text-decoration:none;min-width:0}
+.brand img{height:52px;width:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero .eyebrow,.estimate .eyebrow{color:var(--neon)}
+.top nav{display:flex;align-items:center;gap:18px}
+.top nav a.link{font-size:15px;text-decoration:none;color:var(--slate-muted)}
+.top nav a.link:hover{color:var(--slate-ink)}
+.lang{display:inline-flex;border:1.5px solid rgba(238,242,245,.3);border-radius:999px;padding:2px}
+.lang button{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--slate-muted);background:transparent;border:0;border-radius:999px;padding:7px 10px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--slate-ink);color:var(--slate)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 16px/1 var(--body);padding:14px 20px;border-radius:var(--r);border:0;cursor:pointer;text-decoration:none;transition:background .15s,box-shadow .15s;text-align:center}
+.btn-oak{background:var(--neon);color:#061006}
+.btn-oak:hover{background:var(--neon-hover)}
+.btn-ghost{background:transparent;color:var(--slate-ink);box-shadow:inset 0 0 0 1.5px rgba(238,242,245,.35)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--slate-ink)}
+.phone{font:500 15px/1 var(--mono);letter-spacing:.02em}
+@media (max-width:900px){.top nav a.link{display:none}}
+@media (max-width:520px){.top nav .btn{display:none}.brand img{height:38px}}
+
+/* hero */
+.hero{background:var(--slate);color:var(--slate-ink)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;padding-block:56px 64px}
+.hero h1{font-size:clamp(46px,7vw,90px);font-weight:900}
+.hero h1 em{font-style:normal;color:var(--neon)}
+.hero p.sub{color:var(--slate-muted);font-size:19px;max-width:46ch;margin-top:20px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero .facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);font:500 12.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--slate-muted)}
+.hero .facts span::before{content:"";display:inline-block;width:7px;height:7px;background:var(--neon);margin-right:9px;vertical-align:1px}
+.photo{position:relative;margin:0;border-radius:var(--r);overflow:hidden;background:var(--line)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo figcaption{position:absolute;left:0;bottom:0;right:0;padding:28px 14px 12px;font:500 11.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#EEF2F5;background:linear-gradient(transparent,rgba(10,16,22,.78))}
+.hero .photo{aspect-ratio:4/5;max-height:620px;width:100%}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:32px;padding-block:40px 48px}.hero .photo{aspect-ratio:4/3}}
+
+section.block{padding-block:80px}
+section.block > .wrap > header{display:grid;gap:14px;margin-bottom:40px}
+
+/* services */
+.trades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.trade{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.trade .photo{border-radius:0;aspect-ratio:4/3}
+.shingles{aspect-ratio:4/3;position:relative;display:flex;align-items:flex-end;padding:18px;color:#EEF2F5;
+  background:
+   radial-gradient(ellipse 30px 14px at 50% 100%,rgba(0,0,0,.18) 98%,transparent 100%) 0 0/60px 28px,
+   repeating-linear-gradient(0deg,var(--shingle-a) 0 26px,var(--shingle-b) 26px 28px)}
+.shingles::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 58px,rgba(0,0,0,.22) 58px 60px);
+  -webkit-mask:repeating-linear-gradient(0deg,#000 0 28px,transparent 28px 56px);mask:repeating-linear-gradient(0deg,#000 0 28px,transparent 28px 56px)}
+.shingles::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 28px,rgba(0,0,0,.22) 28px 30px,transparent 30px 60px);
+  -webkit-mask:repeating-linear-gradient(0deg,transparent 0 28px,#000 28px 56px);mask:repeating-linear-gradient(0deg,transparent 0 28px,#000 28px 56px)}
+.shingles span{position:relative;z-index:1;font:800 34px/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.shingles span small{display:block;font:500 11.5px/1.3 var(--mono);letter-spacing:.1em;color:#C9D3DC;margin-top:6px}
+.trade .body{display:grid;gap:12px;padding:22px 22px 24px}
+.trade .unit{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--oak)}
+.trade p{color:var(--muted);font-size:16px}
+.trade ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15.5px}
+.trade li{padding-left:18px;position:relative}
+.trade li::before{content:"";position:absolute;left:0;top:.68em;width:8px;height:2px;background:var(--oak)}
+@media (max-width:900px){.trades{grid-template-columns:1fr}.trade .photo,.shingles{aspect-ratio:16/10}}
+
+/* insurance */
+.insurance{background:var(--card);border-block:1px solid var(--line)}
+.ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sheet{border:1px solid var(--line);border-radius:var(--r);padding:26px 26px 28px;display:grid;gap:14px;align-content:start}
+.sheet.do{border-top:4px solid var(--oak)}
+.sheet.dont{border-top:4px solid var(--muted)}
+.sheet h3{font-size:26px}
+.sheet ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.sheet li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:16px}
+.sheet li i{font:500 14px/1.6 var(--mono);font-style:normal;color:var(--oak)}
+.sheet.dont li i{color:var(--muted)}
+.ins-note{margin-top:24px;font-size:15px;color:var(--muted);max-width:75ch}
+.damage{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.damage span{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;border-radius:999px;background:var(--oak-soft);color:var(--ink)}
+@media (max-width:820px){.ins-grid{grid-template-columns:1fr}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none;counter-reset:s;border-top:2px solid var(--ink)}
+.steps li{counter-increment:s;padding:20px 18px 0 0;display:grid;gap:8px;align-content:start}
+.steps li::before{content:counter(s,decimal-leading-zero);font:900 44px/1 var(--display);color:var(--oak)}
+.steps b{font-weight:700;font-size:17px}
+.steps span{color:var(--muted);font-size:15px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr;row-gap:28px}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.gallery .photo{aspect-ratio:3/4}
+.gallery .photo.wide{grid-column:span 2;aspect-ratio:auto}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery .photo.wide{aspect-ratio:3/4;grid-column:span 1}}
+
+/* estimate */
+.estimate{background:var(--slate);color:var(--slate-ink)}
+.est-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+.estimate h2{color:var(--slate-ink)}
+.estimate .lede{color:var(--slate-muted);margin-top:14px}
+.call-box{margin-top:28px;display:grid;gap:6px;padding:20px;border:1px solid rgba(255,255,255,.14);border-radius:var(--r)}
+.call-box small{font:500 11.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--slate-muted)}
+.call-box .num{font:800 34px/1.1 var(--display);letter-spacing:.02em;user-select:all}
+.call-box .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+form{background:var(--card);color:var(--ink);border-radius:var(--r);padding:28px;display:grid;gap:16px}
+.field{display:grid;gap:6px;min-width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{font-weight:600;font-size:14.5px}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--oak);outline:none;box-shadow:0 0 0 3px var(--oak-soft)}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+legend{font-weight:600;font-size:14.5px;margin-bottom:6px}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices label{font-weight:500;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--r);cursor:pointer;background:var(--paper)}
+.choices input{width:auto;accent-color:var(--oak)}
+.choices label:has(input:checked){border-color:var(--oak);background:var(--oak-soft)}
+.fine{font-size:13px;color:var(--muted)}
+.err{color:#C0392B;font-size:13.5px}
+.done{display:grid;gap:10px;padding:8px 0}
+.done h3{font-size:30px}
+@media (max-width:860px){.est-grid{grid-template-columns:1fr;gap:36px}}
+@media (max-width:480px){.two{grid-template-columns:1fr}form{padding:20px}}
+
+/* faq + footer */
+.faq{border-top:1px solid var(--line);max-width:820px}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:500 22px/1 var(--mono);color:var(--oak)}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--muted);margin-top:10px;max-width:68ch}
+footer{background:var(--slate);color:var(--slate-muted);font-size:14.5px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;padding-block:36px 96px}
+footer b{color:var(--slate-ink)}
+
+.callbar{display:none}
+@media (max-width:720px){
+  .callbar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--slate);
+    padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));border-top:1px solid rgba(255,255,255,.1)}
+  .callbar .btn{padding:14px 10px}
+}
+section[id]{scroll-margin-top:80px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="img/logo-wordmark.jpg" alt="Fernandez Carpet Services" width="640" height="213">
+    </a>
+    <nav aria-label="Main">
+      <a class="link" href="#services" data-i18n="nav1">Services</a>
+      <a class="link" href="#insurance" data-i18n="nav2">Insurance jobs</a>
+      <a class="link" href="#work" data-i18n="nav3">Our work</a>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-es" data-lang="es" aria-pressed="false">ES</button>
+      </div>
+      <a class="btn btn-oak" href="#estimate" data-i18n="navCta">Get an estimate</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" data-i18n="heroEyebrow">Mableton · Metro Atlanta · Se habla español</p>
+        <h1 style="margin-top:16px" data-i18n="heroH1">Floors, roofs &amp; bathrooms <em>done by our own crew</em></h1>
+        <p class="sub" data-i18n="heroSub">Homes and commercial spaces across metro Atlanta. You get an itemized written estimate before any work starts.</p>
+        <div class="ctas">
+          <a class="btn btn-oak" href="#estimate" data-i18n="heroCta1">Get a written estimate</a>
+          <a class="btn btn-ghost" href="sms:+16562336124"><span data-i18n="call">Text us</span> <span class="phone">(656) 233-6124</span></a>
+        </div>
+        <div class="facts">
+          <span data-i18n="fact1">Residential &amp; commercial</span>
+          <span data-i18n="fact2">Itemized written estimates</span>
+          <span data-i18n="fact3">Insurance-paid jobs welcome</span>
+        </div>
+      </div>
+      <figure class="photo"><img src="img/hero-sanding.jpg" alt="Hardwood floor being sanded in a large living room" width="1050" height="1400" data-i18n-alt="altHero"><figcaption data-i18n="capHero">Sanding and refinishing hardwood</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow" data-i18n="svcEyebrow">What we do</p>
+        <h2 data-i18n="svcH2">Three trades, one crew</h2>
+        <p class="lede" data-i18n="svcLede">We stick to the work we know best, so every job is done by people who do it every day.</p>
+      </header>
+      <div class="trades">
+        <article class="trade">
+          <figure class="photo"><img src="img/floor-lvp.jpg" alt="Finished room with new gray vinyl plank floor" loading="lazy" width="739" height="987" data-i18n-alt="altFloor"></figure>
+          <div class="body">
+            <span class="unit" data-i18n="floorUnit">Priced per sq ft</span>
+            <h3 data-i18n="floorH">Floors</h3>
+            <p data-i18n="floorP">New installs, refinishing and full replacements, including floors ruined by water.</p>
+            <ul>
+              <li data-i18n="floor1">Hardwood install, sanding and refinishing</li>
+              <li data-i18n="floor2">Laminate and luxury vinyl plank</li>
+              <li data-i18n="floor3">Tile, carpet and commercial carpet tile</li>
+              <li data-i18n="floor4">Replacement after leaks or flooding</li>
+            </ul>
+          </div>
+        </article>
+        <article class="trade">
+          <div class="shingles" role="img" aria-label="Roof shingles" data-i18n-aria="altRoof"><span>1 square<small data-i18n="roofSquare">= 100 sq ft of roof</small></span></div>
+          <div class="body">
+            <span class="unit" data-i18n="roofUnit">Priced per roofing square</span>
+            <h3 data-i18n="roofH">Roofs</h3>
+            <p data-i18n="roofP">Repairs and full replacements after storms, hail, wind or a fallen tree.</p>
+            <ul>
+              <li data-i18n="roof1">Shingle repair and replacement</li>
+              <li data-i18n="roof2">Storm and hail damage</li>
+              <li data-i18n="roof3">Tree impact repairs</li>
+              <li data-i18n="roof4">Leak tracing and patching</li>
+            </ul>
+          </div>
+        </article>
+        <article class="trade">
+          <figure class="photo"><img src="img/bath-vanity.jpg" alt="Remodeled bathroom with white vanity and glass shower" loading="lazy" width="739" height="987" data-i18n-alt="altBath"></figure>
+          <div class="body">
+            <span class="unit" data-i18n="bathUnit">Priced per project</span>
+            <h3 data-i18n="bathH">Bathrooms</h3>
+            <p data-i18n="bathP">Updates and remodels, from new tile to a full refresh.</p>
+            <ul>
+              <li data-i18n="bath1">Tile floors and shower walls</li>
+              <li data-i18n="bath2">Vanities and fixtures</li>
+              <li data-i18n="bath3">Glass shower doors</li>
+              <li data-i18n="bath4">Water-damaged bathroom repair</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block insurance" id="insurance">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow" data-i18n="insEyebrow">Storm, tree or water damage</p>
+        <h2 data-i18n="insH2">Is your insurance paying for the repair?</h2>
+        <p class="lede" data-i18n="insLede">Many of our jobs are paid through homeowners insurance. You deal with your insurance company. We give you the paperwork your adjuster needs and do the work right.</p>
+        <div class="damage"><span data-i18n="dmg1">Hail &amp; wind</span><span data-i18n="dmg2">Fallen tree</span><span data-i18n="dmg3">Burst pipes</span><span data-i18n="dmg4">Leaks &amp; flooding</span></div>
+      </header>
+      <div class="ins-grid">
+        <div class="sheet do">
+          <h3 data-i18n="doH">What we do</h3>
+          <ul>
+            <li><i>✓</i><span data-i18n="do1">Inspect the damage and photograph every area</span></li>
+            <li><i>✓</i><span data-i18n="do2">Give you a detailed, itemized written estimate to share with your adjuster</span></li>
+            <li><i>✓</i><span data-i18n="do3">Start work only after you approve the contract</span></li>
+            <li><i>✓</i><span data-i18n="do4">Document the finished job with photos for your records</span></li>
+          </ul>
+        </div>
+        <div class="sheet dont">
+          <h3 data-i18n="dontH">What we don't do</h3>
+          <ul>
+            <li><i>✕</i><span data-i18n="dont1">Negotiate your claim with the insurance company</span></li>
+            <li><i>✕</i><span data-i18n="dont2">Pay, waive or discount your deductible</span></li>
+            <li><i>✕</i><span data-i18n="dont3">Ask for payment on a roof job before your 5-day cancellation window closes</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="ins-note" data-i18n="insNote">Georgia law protects homeowners on insurance-paid roof work: if your insurer denies coverage, you can cancel a roof contract within 5 days. We follow it on every job.</p>
+    </div>
+  </section>
+
+  <section class="block" id="process">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow" data-i18n="procEyebrow">How it works</p>
+        <h2 data-i18n="procH2">From first call to final walkthrough</h2>
+      </header>
+      <ol class="steps">
+        <li><b data-i18n="s1b">You text us or send the form</b><span data-i18n="s1">We reply, ask a few questions and book a visit.</span></li>
+        <li><b data-i18n="s2b">We visit your property</b><span data-i18n="s2">We measure, inspect and take photos.</span></li>
+        <li><b data-i18n="s3b">Written estimate</b><span data-i18n="s3">Itemized by material and labor, so you know what you pay for.</span></li>
+        <li><b data-i18n="s4b">The work</b><span data-i18n="s4">Our own crew, on the agreed schedule.</span></li>
+        <li><b data-i18n="s5b">Final walkthrough</b><span data-i18n="s5">We check every detail with you and clean up.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="work" style="padding-top:0">
+    <div class="wrap">
+      <header style="display:grid;gap:14px;margin-bottom:32px">
+        <p class="eyebrow" data-i18n="workEyebrow">Recent projects</p>
+        <h2 data-i18n="workH2">Our work</h2>
+      </header>
+      <div class="gallery">
+        <figure class="photo"><img src="img/red-oak.jpg" alt="Refinished red oak hardwood hallway" loading="lazy" width="768" height="1024"><figcaption data-i18n="g1">Red oak refinishing</figcaption></figure>
+        <figure class="photo"><img src="img/parquet.jpg" alt="Parquet floor being installed" loading="lazy" width="1050" height="1400"><figcaption data-i18n="g2">Parquet installation</figcaption></figure>
+        <figure class="photo"><img src="img/church-carpet.jpg" alt="Church sanctuary with new carpet tile" loading="lazy" width="464" height="832"><figcaption data-i18n="g3">Commercial carpet tile, church sanctuary</figcaption></figure>
+        <figure class="photo"><img src="img/hardwood-new.jpg" alt="New hardwood floor in a meeting room" loading="lazy" width="480" height="848"><figcaption data-i18n="g4">New hardwood, commercial space</figcaption></figure>
+        <figure class="photo"><img src="img/shower-tile.jpg" alt="Herringbone tile shower with glass door" loading="lazy" width="739" height="987"><figcaption data-i18n="g5">Herringbone shower tile</figcaption></figure>
+        <figure class="photo"><img src="img/tile-floor.jpg" alt="Porcelain tile floor in an entry" loading="lazy" width="739" height="987"><figcaption data-i18n="g6">Porcelain tile entry</figcaption></figure>
+        <figure class="photo"><img src="img/kitchen-lvp.jpg" alt="Kitchen with vinyl plank floor" loading="lazy" width="739" height="987"><figcaption data-i18n="g7">Vinyl plank, kitchen</figcaption></figure>
+        <figure class="photo"><img src="img/bedroom-lvp.jpg" alt="Bedroom with new vinyl plank floor" loading="lazy" width="739" height="987"><figcaption data-i18n="g8">Vinyl plank, bedroom</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block estimate" id="estimate">
+    <div class="wrap est-grid">
+      <div>
+        <p class="eyebrow" data-i18n="estEyebrow">Get an estimate</p>
+        <h2 style="margin-top:14px" data-i18n="estH2">Tell us what you need</h2>
+        <p class="lede" data-i18n="estLede">Send the form and we get back to you to book a visit. Prefer to text? Send us a message with what you need and a photo of the area.</p>
+        <div class="call-box">
+          <small data-i18n="callOrText">Text us</small>
+          <a class="num" id="phoneText" href="sms:+16562336124" style="text-decoration:none">(656) 233-6124</a>
+          <div class="row"><button class="btn btn-ghost" type="button" id="copyPhone" data-i18n="copy">Copy number</button></div>
+          <small style="margin-top:6px" data-i18n="spanish">Se habla español</small>
+        </div>
+      </div>
+
+      <form id="leadForm" novalidate>
+        <div class="two">
+          <div class="field"><label for="f-name" data-i18n="fName">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-phone" data-i18n="fPhone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="f-zip" data-i18n="fZip">ZIP code</label><input id="f-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" required></div>
+          <div class="field"><label for="f-service" data-i18n="fService">Service</label>
+            <select id="f-service" name="service" required>
+              <option value="" data-i18n="optChoose">Choose one</option>
+              <option value="floors" data-i18n="optFloors">Floors</option>
+              <option value="roof" data-i18n="optRoof">Roof</option>
+              <option value="bathroom" data-i18n="optBath">Bathroom</option>
+              <option value="not-sure" data-i18n="optUnsure">Not sure</option>
+            </select>
+          </div>
+        </div>
+        <fieldset>
+          <legend data-i18n="fDamage">Is this from storm, tree or water damage?</legend>
+          <div class="choices">
+            <label><input type="radio" name="damage" value="yes" id="f-dmg-yes"> <span data-i18n="yes">Yes</span></label>
+            <label><input type="radio" name="damage" value="no" id="f-dmg-no"> <span data-i18n="no">No</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="f-notes"><span data-i18n="fNotes">Anything else?</span> <span class="fine" data-i18n="optional">(optional)</span></label><textarea id="f-notes" name="notes" rows="3" placeholder="Rooms, square feet, what happened…" data-i18n-ph="phNotes"></textarea></div>
+        <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <p class="err" id="formErr" hidden data-i18n="err">Please fill in your name, phone, a 5-digit ZIP and the service.</p>
+        <p class="err" id="sendErr" hidden data-i18n="sendErr">We couldn't send your request. Please text us at (656) 233-6124.</p>
+        <button class="btn btn-oak" type="submit" id="submitBtn" data-i18n="submit">Request my estimate</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <header><p class="eyebrow" data-i18n="faqEyebrow">Questions</p><h2 data-i18n="faqH2">Common questions</h2></header>
+      <div class="faq">
+        <details><summary data-i18n="q1">Do you work with my insurance company?</summary><p data-i18n="a1">Yes. We inspect, photograph and give you an itemized written estimate you can send to your adjuster. You handle the claim with your insurer; we don't negotiate it for you.</p></details>
+        <details><summary data-i18n="q2">Which areas do you serve?</summary><p data-i18n="a2">We are based in Mableton and work across metro Atlanta. Send your ZIP code in the form and we confirm.</p></details>
+        <details><summary data-i18n="q3">Do you do commercial jobs?</summary><p data-i18n="a3">Yes. We install carpet tile and hardwood in churches, offices and other commercial spaces.</p></details>
+        <details><summary data-i18n="q4">Can you replace a floor damaged by a leak?</summary><p data-i18n="a4">Yes. We remove the damaged flooring, repair the subfloor when needed and install the new floor.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Fernandez Carpet Services</b><br><span data-i18n="tagline2">Floors · Roofs · Bathrooms</span><br>Mableton, GA · Metro Atlanta</div>
+    <div><a href="sms:+16562336124" style="text-decoration:none">Text (656) 233-6124</a><br><span class="ph">[license / insurance]</span><br>© <span id="yr">2026</span> Fernandez Carpet Services LLC</div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="btn btn-ghost" href="sms:+16562336124" data-i18n="barCall">Text us</a>
+  <a class="btn btn-oak" href="#estimate" data-i18n="barEst">Get estimate</a>
+</div>
+
+<script>
+const ES = {
+  tagline:"Pisos · Techos · Baños", tagline2:"Pisos · Techos · Baños",
+  nav1:"Servicios", nav2:"Trabajos con seguro", nav3:"Proyectos", navCta:"Pedir estimado",
+  heroEyebrow:"Mableton · Área de Atlanta · Se habla español",
+  heroH1:"Pisos, techos y baños <em>hechos por nuestro propio equipo</em>",
+  heroSub:"Casas y espacios comerciales en el área de Atlanta. Recibe un estimado escrito y detallado antes de empezar cualquier trabajo.",
+  heroCta1:"Pedir estimado por escrito", call:"Escríbanos",
+  fact1:"Residencial y comercial", fact2:"Estimados escritos y detallados", fact3:"Trabajos pagados por seguro",
+  altHero:"Piso de madera siendo lijado en una sala grande", capHero:"Lijado y acabado de madera",
+  svcEyebrow:"Lo que hacemos", svcH2:"Tres oficios, un solo equipo",
+  svcLede:"Nos enfocamos en lo que mejor sabemos hacer, así cada trabajo lo hace gente que lo hace todos los días.",
+  altFloor:"Habitación terminada con piso nuevo de vinilo gris",
+  floorUnit:"Precio por pie cuadrado", floorH:"Pisos",
+  floorP:"Instalación, restauración y reemplazo completo, incluso pisos dañados por agua.",
+  floor1:"Instalación, lijado y acabado de madera", floor2:"Laminado y vinilo de lujo (LVP)",
+  floor3:"Cerámica, alfombra y alfombra comercial en placas", floor4:"Reemplazo tras fugas o inundaciones",
+  altRoof:"Tejas de techo", roofSquare:"= 100 pies cuadrados de techo",
+  roofUnit:"Precio por cuadro de techo", roofH:"Techos",
+  roofP:"Reparación y reemplazo completo después de tormentas, granizo, viento o un árbol caído.",
+  roof1:"Reparación y reemplazo de tejas", roof2:"Daños por tormenta y granizo",
+  roof3:"Reparación por caída de árboles", roof4:"Detección y reparación de goteras",
+  altBath:"Baño remodelado con mueble blanco y ducha de vidrio",
+  bathUnit:"Precio por proyecto", bathH:"Baños",
+  bathP:"Actualizaciones y remodelaciones, desde cerámica nueva hasta una renovación completa.",
+  bath1:"Pisos y paredes de ducha en cerámica", bath2:"Muebles de baño y grifería",
+  bath3:"Puertas de ducha en vidrio", bath4:"Reparación de baños dañados por agua",
+  insEyebrow:"Daños por tormenta, árbol o agua", insH2:"¿Su seguro va a pagar la reparación?",
+  insLede:"Muchos de nuestros trabajos se pagan con el seguro de vivienda. Usted trata con su aseguradora. Nosotros le damos los documentos que su ajustador necesita y hacemos el trabajo bien.",
+  dmg1:"Granizo y viento", dmg2:"Árbol caído", dmg3:"Tuberías rotas", dmg4:"Fugas e inundaciones",
+  doH:"Lo que hacemos", do1:"Inspeccionamos el daño y fotografiamos cada área",
+  do2:"Le damos un estimado escrito y detallado para compartir con su ajustador",
+  do3:"Empezamos solo después de que usted apruebe el contrato",
+  do4:"Documentamos el trabajo terminado con fotos para sus registros",
+  dontH:"Lo que no hacemos", dont1:"Negociar su reclamo con la aseguradora",
+  dont2:"Pagar, perdonar o descontar su deducible",
+  dont3:"Cobrar un trabajo de techo antes de que termine su plazo de 5 días para cancelar",
+  insNote:"La ley de Georgia protege a los dueños en trabajos de techo pagados por seguro: si su aseguradora niega la cobertura, puede cancelar el contrato del techo dentro de 5 días. Lo cumplimos en cada trabajo.",
+  procEyebrow:"Cómo funciona", procH2:"De la primera llamada a la entrega final",
+  s1b:"Nos escribe o envía el formulario", s1:"Le respondemos, hacemos unas preguntas y agendamos una visita.",
+  s2b:"Visitamos su propiedad", s2:"Medimos, inspeccionamos y tomamos fotos.",
+  s3b:"Estimado por escrito", s3:"Detallado por material y mano de obra, para que sepa qué está pagando.",
+  s4b:"El trabajo", s4:"Nuestro propio equipo, en las fechas acordadas.",
+  s5b:"Entrega final", s5:"Revisamos cada detalle con usted y dejamos todo limpio.",
+  workEyebrow:"Proyectos recientes", workH2:"Nuestro trabajo",
+  g1:"Restauración de roble rojo", g2:"Instalación de parquet", g3:"Alfombra comercial en placas, iglesia",
+  g4:"Madera nueva, espacio comercial", g5:"Ducha con cerámica en espiga", g6:"Entrada en porcelanato",
+  g7:"Vinilo en cocina", g8:"Vinilo en habitación",
+  estEyebrow:"Pida su estimado", estH2:"Cuéntenos qué necesita",
+  estLede:"Envíe el formulario y le contactamos para agendar una visita. ¿Prefiere escribir? Mándenos un mensaje con lo que necesita y una foto del área.",
+  callOrText:"Escríbanos", copy:"Copiar número", spanish:"Se habla español",
+  fName:"Nombre", fPhone:"Teléfono", fZip:"Código postal (ZIP)", fService:"Servicio",
+  optChoose:"Elija uno", optFloors:"Pisos", optRoof:"Techo", optBath:"Baño", optUnsure:"No estoy seguro",
+  fDamage:"¿Es por daños de tormenta, árbol o agua?", yes:"Sí", no:"No",
+  fNotes:"¿Algo más?", optional:"(opcional)", phNotes:"Habitaciones, pies cuadrados, qué pasó…",
+  err:"Por favor escriba su nombre, teléfono, un ZIP de 5 dígitos y el servicio.",
+  submit:"Pedir mi estimado",
+  sendErr:"No pudimos enviar su solicitud. Escríbanos al (656) 233-6124.", sending:"Enviando…",
+  faqEyebrow:"Preguntas", faqH2:"Preguntas frecuentes",
+  q1:"¿Trabajan con mi aseguradora?", a1:"Sí. Inspeccionamos, tomamos fotos y le damos un estimado escrito y detallado para enviar a su ajustador. Usted maneja el reclamo con su aseguradora; nosotros no lo negociamos por usted.",
+  q2:"¿En qué zonas trabajan?", a2:"Estamos en Mableton y trabajamos en toda el área de Atlanta. Envíe su código postal en el formulario y le confirmamos.",
+  q3:"¿Hacen trabajos comerciales?", a3:"Sí. Instalamos alfombra en placas y madera en iglesias, oficinas y otros espacios comerciales.",
+  q4:"¿Pueden reemplazar un piso dañado por una fuga?", a4:"Sí. Retiramos el piso dañado, reparamos el subpiso si hace falta e instalamos el piso nuevo.",
+  barCall:"Escríbanos", barEst:"Pedir estimado",
+  doneEyebrow:"Solicitud recibida", doneThanks:"Gracias, ",
+  doneNote:"Recibimos su solicitud. Le contactamos pronto para agendar una visita.",
+  copied:"Copiado", selected:"Seleccionado, cópielo",
+  title:"Fernandez Carpet Services | Pisos, techos y baños en Atlanta"
+};
+const EN_EXTRA = {
+  doneEyebrow:"Request received", doneThanks:"Thanks, ",
+  doneNote:"We got your request and will contact you soon to book a visit.", sending:"Sending…",
+  copied:"Copied", selected:"Selected, copy it",
+  title:"Fernandez Carpet Services | Floors, roofs & bathrooms in Atlanta"
+};
+const EN = {};
+document.querySelectorAll('[data-i18n]').forEach(el => { EN[el.dataset.i18n] = el.innerHTML; });
+document.querySelectorAll('[data-i18n-ph]').forEach(el => { EN[el.dataset.i18nPh] = el.placeholder; });
+document.querySelectorAll('[data-i18n-alt]').forEach(el => { EN[el.dataset.i18nAlt] = el.alt; });
+document.querySelectorAll('[data-i18n-aria]').forEach(el => { EN[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
+Object.assign(EN, EN_EXTRA);
+
+let lang = 'en';
+const t = k => (lang === 'es' ? ES : EN)[k] ?? EN[k];
+function setLang(l, save) {
+  lang = l === 'es' ? 'es' : 'en';
+  const dict = lang === 'es' ? ES : EN;
+  document.querySelectorAll('[data-i18n]').forEach(el => { const v = dict[el.dataset.i18n]; if (v != null) el.innerHTML = v; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = dict[el.dataset.i18nPh] ?? el.placeholder; });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el => { el.alt = dict[el.dataset.i18nAlt] ?? el.alt; });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', dict[el.dataset.i18nAria] ?? ''); });
+  document.documentElement.lang = lang;
+  document.title = t('title');
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  if (save) { try { localStorage.setItem('ff-lang', lang); } catch (e) {} }
+}
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang, true)));
+
+let initial = 'en';
+try { initial = localStorage.getItem('ff-lang') || ''; } catch (e) {}
+if (!initial) initial = location.hash === '#es' || (navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en';
+if (location.hash === '#es') initial = 'es';
+setLang(initial, false);
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const form = document.getElementById('leadForm');
+const err = document.getElementById('formErr');
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@fernandezgc.com';
+const sendErr = document.getElementById('sendErr');
+const submitBtn = document.getElementById('submitBtn');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(form));
+  if (d._honey) return; // bot
+  const ok = d.name.trim() && d.phone.replace(/\D/g, '').length >= 10 && /^\d{5}$/.test(d.zip.trim()) && d.service;
+  err.hidden = !!ok;
+  sendErr.hidden = true;
+  if (!ok) return;
+  const serviceLabel = form.querySelector('#f-service option:checked').textContent;
+  const payload = {
+    Name: d.name.trim(), Phone: d.phone.trim(), ZIP: d.zip.trim(), Service: serviceLabel,
+    'Storm / tree / water damage': d.damage === 'yes' ? 'Yes' : d.damage === 'no' ? 'No' : 'Not answered',
+    Notes: (d.notes || '').trim() || '-', Language: lang === 'es' ? 'Spanish' : 'English',
+    Page: location.href,
+    _subject: 'New estimate request: ' + serviceLabel + ' (' + d.zip.trim() + ')',
+    _template: 'table', _captcha: 'false'
+  };
+  submitBtn.disabled = true; submitBtn.textContent = t('sending');
+  try {
+    const res = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || String(out.success) === 'false') throw new Error(out.message || res.status);
+  } catch (ex) {
+    console.error(ex);
+    submitBtn.disabled = false; submitBtn.textContent = t('submit');
+    sendErr.hidden = false;
+    return;
+  }
+  if (window.gtag) gtag('event', 'generate_lead', { service: d.service });
+  const first = d.name.trim().split(' ')[0].replace(/[<>&"]/g, '');
+  form.innerHTML = '<div class="done"><p class="eyebrow">' + t('doneEyebrow') + '</p><h3>' + t('doneThanks') + first +
+    '</h3><p class="fine">' + t('doneNote') + '</p></div>';
+});
+
+document.getElementById('copyPhone').addEventListener('click', (e) => {
+  const el = document.getElementById('phoneText');
+  const btn = e.currentTarget;
+  navigator.clipboard.writeText(el.textContent).then(() => { btn.textContent = t('copied'); })
+    .catch(() => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = t('selected'); });
+});
+</script>
+
+</body>
+</html>
