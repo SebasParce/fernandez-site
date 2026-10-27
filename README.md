@@ -13,3 +13,10 @@ The first submission on the live domain sends an activation email to that addres
 ## Deploy on Vercel
 Import this repository in Vercel → Framework preset: **Other** → no build command, output directory `.` → Deploy.
 Then add the custom domain under Project → Settings → Domains.
+
+## SMS relay (Twilio)
+`twilio/sms-relay.js` is a Twilio Function, not part of the website (excluded from Vercel by `.vercelignore`).
+Customer texts to the business number are forwarded to `OWNER_CELL`; replies sent as `+1XXXXXXXXXX message`
+from `OWNER_CELL` go out to the customer from the business number. Deploy it in Twilio Console →
+Functions and Assets → Services, set the `OWNER_CELL` environment variable, and point the number's
+"A message comes in" to the function. Requires an approved A2P 10DLC campaign.
