@@ -564,9 +564,7 @@ form.addEventListener('submit', async (e) => {
     return;
   }
   if (window.gtag) gtag('event', 'generate_lead', { service: d.service });
-  const first = d.name.trim().split(' ')[0].replace(/[<>&"]/g, '');
-  form.innerHTML = '<div class="done"><p class="eyebrow">' + t('doneEyebrow') + '</p><h3>' + t('doneThanks') + first +
-    '</h3><p class="fine">' + t('doneNote') + '</p></div>';
+  location.href = '/thanks' + (lang === 'es' ? '#es' : '');
 });
 
 document.getElementById('copyPhone').addEventListener('click', (e) => {
