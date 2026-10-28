@@ -1,9 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZZ1C7RD4R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8ZZ1C7RD4R');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fernandez Flooring</title>
+<title>Fernandez Carpet Services | Floors, Roofs &amp; Bathrooms in Atlanta</title>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -567,7 +576,7 @@ form.addEventListener('submit', async (e) => {
     sendErr.hidden = false;
     return;
   }
-  if (window.gtag) gtag('event', 'generate_lead', { service: d.service });
+  try { sessionStorage.setItem('ff-lead', JSON.stringify({ service: d.service, damage: d.damage || '', lang })); } catch (e) {}
   location.href = '/thanks' + (lang === 'es' ? '#es' : '');
 });
 
@@ -576,6 +585,12 @@ document.getElementById('copyPhone').addEventListener('click', (e) => {
   const btn = e.currentTarget;
   navigator.clipboard.writeText(el.textContent).then(() => { btn.textContent = t('copied'); })
     .catch(() => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = t('selected'); });
+});
+
+// GA4: count taps on "Text us" links
+document.addEventListener('click', (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="sms:"]');
+  if (a && window.gtag) gtag('event', 'sms_click', { link_text: a.textContent.trim().slice(0, 40), page_path: location.pathname });
 });
 </script>
 

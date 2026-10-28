@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZZ1C7RD4R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8ZZ1C7RD4R');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Request received | Fernandez Carpet Services</title>
@@ -264,6 +273,21 @@ let l = location.hash === '#es' ? 'es' : '';
 if (!l) { try { l = localStorage.getItem('ff-lang') || ''; } catch (e) {} }
 setLang(l === 'es' ? 'es' : 'en');
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+// GA4: count taps on "Text us" links
+document.addEventListener('click', (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="sms:"]');
+  if (a && window.gtag) gtag('event', 'sms_click', { link_text: a.textContent.trim().slice(0, 40), page_path: location.pathname });
+});
+
+// GA4: one generate_lead per form submission (not on refresh or direct visits)
+try {
+  const lead = JSON.parse(sessionStorage.getItem('ff-lead') || 'null');
+  if (lead && window.gtag) {
+    gtag('event', 'generate_lead', { service: lead.service, damage: lead.damage, language: lead.lang });
+    sessionStorage.removeItem('ff-lead');
+  }
+} catch (e) {}
 </script>
 </body>
 </html>
