@@ -196,6 +196,9 @@ footer{background:var(--slate);color:var(--slate-muted);font-size:14.5px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;padding-block:36px 96px}
 footer b{color:var(--slate-ink)}
 
+.agent-fab{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:24;display:inline-flex;align-items:center;gap:10px;background:var(--neon);color:#061006;font:700 16px/1 var(--body);padding:15px 22px;border-radius:999px;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.28);transition:background .15s,transform .15s}
+.agent-fab:hover{background:var(--neon-hover);transform:translateY(-1px)}
+@media (max-width:720px){.agent-fab{display:none}}
 .callbar{display:none}
 @media (max-width:720px){
   .callbar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--slate);
@@ -438,8 +441,10 @@ section[id]{scroll-margin-top:80px}
   </div>
 </footer>
 
+<a class="agent-fab" data-agent href="sms:+14156539295"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm3 6.5a1.5 1.5 0 1 0 0 .01Zm5 0a1.5 1.5 0 1 0 0 .01Zm5 0a1.5 1.5 0 1 0 0 .01Z"/></svg><span data-i18n="agent">Talk to an agent</span></a>
+
 <div class="callbar">
-  <a class="btn btn-ghost" href="sms:+14156539295" data-i18n="barCall">Text us</a>
+  <a class="btn btn-ghost" data-agent href="sms:+14156539295" data-i18n="barCall">Talk to an agent</a>
   <a class="btn btn-oak" href="#estimate" data-i18n="barEst">Get estimate</a>
 </div>
 
@@ -509,13 +514,14 @@ const ES = {
   q2:"¿En qué zonas trabajan?", a2:"Trabajamos en toda el área de Atlanta. Envíe su código postal en el formulario y le confirmamos.",
   q3:"¿Hacen trabajos comerciales?", a3:"Sí. Instalamos alfombra en placas y madera en iglesias, oficinas y otros espacios comerciales.",
   q4:"¿Pueden reemplazar un piso dañado por una fuga?", a4:"Sí. Retiramos el piso dañado, reparamos el subpiso si hace falta e instalamos el piso nuevo.",
-  barCall:"Escríbanos", barEst:"Pedir estimado",
+  barCall:"Hablar con un agente", agent:"Hablar con un agente", agentBody:"Hola, quiero hablar con un agente sobre mi proyecto.", barEst:"Pedir estimado",
   doneEyebrow:"Solicitud recibida", doneThanks:"Gracias, ",
   doneNote:"Recibimos su solicitud. Le contactamos pronto para agendar una visita.",
   copied:"Copiado", selected:"Seleccionado, cópielo",
   title:"Fernandez Carpet Services | Pisos, techos y baños en Atlanta"
 };
 const EN_EXTRA = {
+  agentBody:"Hi, I'd like to talk to an agent about my project.",
   doneEyebrow:"Request received", doneThanks:"Thanks, ",
   doneNote:"We got your request and will contact you soon to book a visit.", sending:"Sending…",
   copied:"Copied", selected:"Selected, copy it",
@@ -539,6 +545,7 @@ function setLang(l, save) {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', dict[el.dataset.i18nAria] ?? ''); });
   document.documentElement.lang = lang;
   document.title = t('title');
+  document.querySelectorAll('[data-agent]').forEach(a => { a.href = 'sms:+14156539295?&body=' + encodeURIComponent(t('agentBody')); });
   document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
   if (save) { try { localStorage.setItem('ff-lang', lang); } catch (e) {} }
 }
