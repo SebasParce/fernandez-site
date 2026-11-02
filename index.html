@@ -387,6 +387,7 @@ section[id]{scroll-margin-top:80px}
           <div class="field"><label for="f-name" data-i18n="fName">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
           <div class="field"><label for="f-phone" data-i18n="fPhone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
         </div>
+        <div class="field"><label for="f-email" data-i18n="fEmail">Email</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
         <div class="two">
           <div class="field"><label for="f-zip" data-i18n="fZip">ZIP code</label><input id="f-zip" name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" required></div>
           <div class="field"><label for="f-service" data-i18n="fService">Service</label>
@@ -410,7 +411,7 @@ section[id]{scroll-margin-top:80px}
         <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <label class="consent" for="f-sms"><input type="checkbox" name="sms_consent" id="f-sms" value="yes"> <span data-i18n="smsConsent">I agree to receive text messages from Fernandez Carpet Services about my estimate request, such as scheduling and project updates. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.</span></label>
         <p class="fine" data-i18n="legalLine">By submitting, you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
-        <p class="err" id="formErr" hidden data-i18n="err">Please fill in your name, phone, a 5-digit ZIP and the service.</p>
+        <p class="err" id="formErr" hidden data-i18n="err">Please fill in your name, phone, a valid email, a 5-digit ZIP and the service.</p>
         <p class="err" id="sendErr" hidden data-i18n="sendErr">We couldn't send your request. Please text us at (415) 653-9295.</p>
         <button class="btn btn-oak" type="submit" id="submitBtn" data-i18n="submit">Request my estimate</button>
       </form>
@@ -493,14 +494,14 @@ const ES = {
   estEyebrow:"Pida su estimado", estH2:"Cuéntenos qué necesita",
   estLede:"Envíe el formulario y le contactamos para agendar una visita. ¿Prefiere escribir? Mándenos un mensaje con lo que necesita y una foto del área.",
   callOrText:"Escríbanos", copy:"Copiar número", spanish:"Se habla español",
-  fName:"Nombre", fPhone:"Teléfono", fZip:"Código postal (ZIP)", fService:"Servicio",
+  fName:"Nombre", fPhone:"Teléfono", fEmail:"Correo electrónico", fZip:"Código postal (ZIP)", fService:"Servicio",
   optChoose:"Elija uno", optFloors:"Pisos", optRoof:"Techo", optBath:"Baño", optUnsure:"No estoy seguro",
   fDamage:"¿Es por daños de tormenta, árbol o agua?", yes:"Sí", no:"No",
   smsConsent:"Acepto recibir mensajes de texto de Fernandez Carpet Services sobre mi solicitud de estimado, como agendamiento y novedades del proyecto. La frecuencia varía. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar o HELP para ayuda. El consentimiento no es condición de compra.",
   legalLine:"Al enviar, acepta nuestros <a href=\"/terms\">Términos</a> y nuestra <a href=\"/privacy\">Política de privacidad</a>.",
   privacyLink:"Privacidad", termsLink:"Términos",
   fNotes:"¿Algo más?", optional:"(opcional)", phNotes:"Habitaciones, pies cuadrados, qué pasó…",
-  err:"Por favor escriba su nombre, teléfono, un ZIP de 5 dígitos y el servicio.",
+  err:"Por favor escriba su nombre, teléfono, un correo válido, un ZIP de 5 dígitos y el servicio.",
   submit:"Pedir mi estimado",
   sendErr:"No pudimos enviar su solicitud. Escríbanos al (415) 653-9295.", sending:"Enviando…",
   faqEyebrow:"Preguntas", faqH2:"Preguntas frecuentes",
@@ -559,12 +560,12 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(form));
   if (d._honey) return; // bot
-  const ok = d.name.trim() && d.phone.replace(/\D/g, '').length >= 10 && /^\d{5}$/.test(d.zip.trim()) && d.service;
+  const ok = d.name.trim() && d.phone.replace(/\D/g, '').length >= 10 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((d.email || '').trim()) && /^\d{5}$/.test(d.zip.trim()) && d.service;
   err.hidden = !!ok;
   if (!ok) { err.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
   const serviceLabel = form.querySelector('#f-service option:checked').textContent;
   const fields = {
-    Name: d.name.trim(), Phone: d.phone.trim(), ZIP: d.zip.trim(), Service: serviceLabel,
+    Name: d.name.trim(), Phone: d.phone.trim(), email: d.email.trim(), ZIP: d.zip.trim(), Service: serviceLabel,
     'Storm / tree / water damage': d.damage === 'yes' ? 'Yes' : d.damage === 'no' ? 'No' : 'Not answered',
     Notes: (d.notes || '').trim() || '-', Language: lang === 'es' ? 'Spanish' : 'English',
     'SMS consent': d.sms_consent === 'yes' ? 'Yes' : 'No',
