@@ -176,6 +176,9 @@ legend{font-weight:600;font-size:14.5px;margin-bottom:6px}
 .choices label:has(input:checked){border-color:var(--oak);background:var(--oak-soft)}
 .fine{font-size:13px;color:var(--muted)}
 .err{color:#C0392B;font-size:13.5px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13.5px;line-height:1.5;color:var(--muted);cursor:pointer}
+.consent input{width:auto;margin-top:3px;accent-color:var(--oak);flex:none}
+.fine a,footer a{color:inherit}
 .done{display:grid;gap:10px;padding:8px 0}
 .done h3{font-size:30px}
 @media (max-width:860px){.est-grid{grid-template-columns:1fr;gap:36px}}
@@ -228,7 +231,7 @@ section[id]{scroll-margin-top:80px}
   <section class="hero">
     <div class="wrap">
       <div>
-        <p class="eyebrow" data-i18n="heroEyebrow">Mableton · Metro Atlanta · Se habla español</p>
+        <p class="eyebrow" data-i18n="heroEyebrow">Metro Atlanta · Se habla español</p>
         <h1 style="margin-top:16px" data-i18n="heroH1">Floors, roofs &amp; bathrooms <em>done by our own crew</em></h1>
         <p class="sub" data-i18n="heroSub">Homes and commercial spaces across metro Atlanta. You get an itemized written estimate before any work starts.</p>
         <div class="ctas">
@@ -405,6 +408,8 @@ section[id]{scroll-margin-top:80px}
         </fieldset>
         <div class="field"><label for="f-notes"><span data-i18n="fNotes">Anything else?</span> <span class="fine" data-i18n="optional">(optional)</span></label><textarea id="f-notes" name="notes" rows="3" placeholder="Rooms, square feet, what happened…" data-i18n-ph="phNotes"></textarea></div>
         <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <label class="consent" for="f-sms"><input type="checkbox" name="sms_consent" id="f-sms" value="yes"> <span data-i18n="smsConsent">I agree to receive text messages from Fernandez Carpet Services about my estimate request, such as scheduling and project updates. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase.</span></label>
+        <p class="fine" data-i18n="legalLine">By submitting, you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
         <p class="err" id="formErr" hidden data-i18n="err">Please fill in your name, phone, a 5-digit ZIP and the service.</p>
         <p class="err" id="sendErr" hidden data-i18n="sendErr">We couldn't send your request. Please text us at (656) 233-6124.</p>
         <button class="btn btn-oak" type="submit" id="submitBtn" data-i18n="submit">Request my estimate</button>
@@ -417,7 +422,7 @@ section[id]{scroll-margin-top:80px}
       <header><p class="eyebrow" data-i18n="faqEyebrow">Questions</p><h2 data-i18n="faqH2">Common questions</h2></header>
       <div class="faq">
         <details><summary data-i18n="q1">Do you work with my insurance company?</summary><p data-i18n="a1">Yes. We inspect, photograph and give you an itemized written estimate you can send to your adjuster. You handle the claim with your insurer; we don't negotiate it for you.</p></details>
-        <details><summary data-i18n="q2">Which areas do you serve?</summary><p data-i18n="a2">We are based in Mableton and work across metro Atlanta. Send your ZIP code in the form and we confirm.</p></details>
+        <details><summary data-i18n="q2">Which areas do you serve?</summary><p data-i18n="a2">We work across metro Atlanta. Send your ZIP code in the form and we confirm.</p></details>
         <details><summary data-i18n="q3">Do you do commercial jobs?</summary><p data-i18n="a3">Yes. We install carpet tile and hardwood in churches, offices and other commercial spaces.</p></details>
         <details><summary data-i18n="q4">Can you replace a floor damaged by a leak?</summary><p data-i18n="a4">Yes. We remove the damaged flooring, repair the subfloor when needed and install the new floor.</p></details>
       </div>
@@ -427,8 +432,8 @@ section[id]{scroll-margin-top:80px}
 
 <footer>
   <div class="wrap">
-    <div><b>Fernandez Carpet Services</b><br><span data-i18n="tagline2">Floors · Roofs · Bathrooms</span><br>Mableton, GA · Metro Atlanta</div>
-    <div><a href="sms:+16562336124" style="text-decoration:none">Text (656) 233-6124</a><br><span class="ph">[license / insurance]</span><br>© <span id="yr">2026</span> Fernandez Carpet Services LLC</div>
+    <div><b>Fernandez Carpet Services</b><br><span data-i18n="tagline2">Floors · Roofs · Bathrooms</span><br>Metro Atlanta, Georgia</div>
+    <div><a href="sms:+16562336124" style="text-decoration:none">Text (656) 233-6124</a><br><span class="ph">[license / insurance]</span><br>© <span id="yr">2026</span> Fernandez Carpet Services LLC<br><a href="/privacy" data-i18n="privacyLink">Privacy</a> · <a href="/terms" data-i18n="termsLink">Terms</a></div>
   </div>
 </footer>
 
@@ -441,7 +446,7 @@ section[id]{scroll-margin-top:80px}
 const ES = {
   tagline:"Pisos · Techos · Baños", tagline2:"Pisos · Techos · Baños",
   nav1:"Servicios", nav2:"Trabajos con seguro", nav3:"Proyectos", navCta:"Pedir estimado",
-  heroEyebrow:"Mableton · Área de Atlanta · Se habla español",
+  heroEyebrow:"Área de Atlanta · Se habla español",
   heroH1:"Pisos, techos y baños <em>hechos por nuestro propio equipo</em>",
   heroSub:"Casas y espacios comerciales en el área de Atlanta. Recibe un estimado escrito y detallado antes de empezar cualquier trabajo.",
   heroCta1:"Pedir estimado por escrito", call:"Escríbanos",
@@ -491,13 +496,16 @@ const ES = {
   fName:"Nombre", fPhone:"Teléfono", fZip:"Código postal (ZIP)", fService:"Servicio",
   optChoose:"Elija uno", optFloors:"Pisos", optRoof:"Techo", optBath:"Baño", optUnsure:"No estoy seguro",
   fDamage:"¿Es por daños de tormenta, árbol o agua?", yes:"Sí", no:"No",
+  smsConsent:"Acepto recibir mensajes de texto de Fernandez Carpet Services sobre mi solicitud de estimado, como agendamiento y novedades del proyecto. La frecuencia varía. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar o HELP para ayuda. El consentimiento no es condición de compra.",
+  legalLine:"Al enviar, acepta nuestros <a href=\"/terms\">Términos</a> y nuestra <a href=\"/privacy\">Política de privacidad</a>.",
+  privacyLink:"Privacidad", termsLink:"Términos",
   fNotes:"¿Algo más?", optional:"(opcional)", phNotes:"Habitaciones, pies cuadrados, qué pasó…",
   err:"Por favor escriba su nombre, teléfono, un ZIP de 5 dígitos y el servicio.",
   submit:"Pedir mi estimado",
   sendErr:"No pudimos enviar su solicitud. Escríbanos al (656) 233-6124.", sending:"Enviando…",
   faqEyebrow:"Preguntas", faqH2:"Preguntas frecuentes",
   q1:"¿Trabajan con mi aseguradora?", a1:"Sí. Inspeccionamos, tomamos fotos y le damos un estimado escrito y detallado para enviar a su ajustador. Usted maneja el reclamo con su aseguradora; nosotros no lo negociamos por usted.",
-  q2:"¿En qué zonas trabajan?", a2:"Estamos en Mableton y trabajamos en toda el área de Atlanta. Envíe su código postal en el formulario y le confirmamos.",
+  q2:"¿En qué zonas trabajan?", a2:"Trabajamos en toda el área de Atlanta. Envíe su código postal en el formulario y le confirmamos.",
   q3:"¿Hacen trabajos comerciales?", a3:"Sí. Instalamos alfombra en placas y madera en iglesias, oficinas y otros espacios comerciales.",
   q4:"¿Pueden reemplazar un piso dañado por una fuga?", a4:"Sí. Retiramos el piso dañado, reparamos el subpiso si hace falta e instalamos el piso nuevo.",
   barCall:"Escríbanos", barEst:"Pedir estimado",
@@ -561,6 +569,7 @@ form.addEventListener('submit', async (e) => {
     Name: d.name.trim(), Phone: d.phone.trim(), ZIP: d.zip.trim(), Service: serviceLabel,
     'Storm / tree / water damage': d.damage === 'yes' ? 'Yes' : d.damage === 'no' ? 'No' : 'Not answered',
     Notes: (d.notes || '').trim() || '-', Language: lang === 'es' ? 'Spanish' : 'English',
+    'SMS consent': d.sms_consent === 'yes' ? 'Yes' : 'No',
     Page: location.href,
     _subject: 'New estimate request: ' + serviceLabel + ' (' + d.zip.trim() + ')',
     _template: 'table', _captcha: 'false'
