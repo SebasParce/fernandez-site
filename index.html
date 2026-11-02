@@ -553,40 +553,36 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
 const form = document.getElementById('leadForm');
 const err = document.getElementById('formErr');
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@fernandezgc.com';
-const sendErr = document.getElementById('sendErr');
+const FORM_ACTION = 'https://formsubmit.co/info@fernandezgc.com';
 const submitBtn = document.getElementById('submitBtn');
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', (e) => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(form));
   if (d._honey) return; // bot
   const ok = d.name.trim() && d.phone.replace(/\D/g, '').length >= 10 && /^\d{5}$/.test(d.zip.trim()) && d.service;
   err.hidden = !!ok;
-  sendErr.hidden = true;
-  if (!ok) return;
+  if (!ok) { err.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
   const serviceLabel = form.querySelector('#f-service option:checked').textContent;
-  const payload = {
+  const fields = {
     Name: d.name.trim(), Phone: d.phone.trim(), ZIP: d.zip.trim(), Service: serviceLabel,
     'Storm / tree / water damage': d.damage === 'yes' ? 'Yes' : d.damage === 'no' ? 'No' : 'Not answered',
     Notes: (d.notes || '').trim() || '-', Language: lang === 'es' ? 'Spanish' : 'English',
     'SMS consent': d.sms_consent === 'yes' ? 'Yes' : 'No',
-    Page: location.href,
     _subject: 'New estimate request: ' + serviceLabel + ' (' + d.zip.trim() + ')',
-    _template: 'table', _captcha: 'false'
+    _template: 'table', _captcha: 'false',
+    _next: location.origin + '/thanks'
   };
-  submitBtn.disabled = true; submitBtn.textContent = t('sending');
-  try {
-    const res = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
-    const out = await res.json().catch(() => ({}));
-    if (!res.ok || String(out.success) === 'false') throw new Error(out.message || res.status);
-  } catch (ex) {
-    console.error(ex);
-    submitBtn.disabled = false; submitBtn.textContent = t('submit');
-    sendErr.hidden = false;
-    return;
+  try { sessionStorage.setItem('ff-lead', JSON.stringify({ service: d.service, damage: d.damage || '', lang })); } catch (ex) {}
+  try { localStorage.setItem('ff-lang', lang); } catch (ex) {}
+  // Plain form POST to FormSubmit: no waiting on a background request, and FormSubmit redirects to /thanks.
+  const out = document.createElement('form');
+  out.method = 'POST'; out.action = FORM_ACTION; out.style.display = 'none';
+  for (const [k, v] of Object.entries(fields)) {
+    const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = v; out.appendChild(i);
   }
-  try { sessionStorage.setItem('ff-lead', JSON.stringify({ service: d.service, damage: d.damage || '', lang })); } catch (e) {}
-  location.href = '/thanks' + (lang === 'es' ? '#es' : '');
+  document.body.appendChild(out);
+  submitBtn.disabled = true; submitBtn.textContent = t('sending');
+  out.submit();
 });
 
 document.getElementById('copyPhone').addEventListener('click', (e) => {
